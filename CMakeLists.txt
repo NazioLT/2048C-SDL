@@ -3,7 +3,10 @@ project(2048_App C)
 
 set(CMAKE_C_STANDARD 17)
 
-# Create an option to switch between a system sdl library and a vendored sdl library
+# -------------------------------
+#         GET LIBRARIES
+# -------------------------------
+
 option(2048C_VENDORED "Use vendored libraries" OFF)
 
 if(2048C_VENDORED)
@@ -12,7 +15,8 @@ if(2048C_VENDORED)
 else()
     find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
     find_package(SDL2 REQUIRED CONFIG COMPONENTS SDL2main)
-    find_package(SDL2_image REQUIRED)
+    
+    find_package(SDL2_image)
 endif()
 
 # -------------------------------
@@ -31,15 +35,18 @@ endif()
 #         Create Project
 # -------------------------------
 
-# Create your game executable target as usual
+set(EXECUTABLE_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/build)
+
 add_executable(2048_App "src/main.c")
 
-# SDL2::SDL2main may or may not be available. It is e.g. required by Windows GUI applications
+target_link_libraries(2048_App PRIVATE SDL2_image::SDL2_image)
+
 if(TARGET SDL2::SDL2main)
-    # It has an implicit dependency on SDL2 functions, so it MUST be added before SDL2::SDL2 (or SDL2::SDL2-static)
     target_link_libraries(2048_App PRIVATE SDL2::SDL2main)
 endif()
 
-# Link to the actual SDL2 library. SDL2::SDL2 is the shared SDL library, SDL2::SDL2-static is the static SDL libarary.
 target_link_libraries(2048_App PRIVATE SDL2::SDL2)
-target_link_libraries(2048_App PRIVATE SDL2_image::SDL2_image)
+
+add_custom_command(TARGET 2048_App POST_BUILD
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${SDL2_image_DIR}/../bin/SDL2_image.dll" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/"
+)
