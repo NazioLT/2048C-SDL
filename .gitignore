@@ -1,2 +1,13 @@
 cmake/
 build/
+.vs/
+CMakeFiles/
+2048_App.dir/
+x64/
+
+CMakeCache.txt
+
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.cmake

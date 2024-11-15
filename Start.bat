@@ -4,5 +4,3 @@ if not exist cmake (
 
 cd cmake
 cmake ..
-
-start 2048_App.sln

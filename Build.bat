@@ -3,7 +3,8 @@ if not exist cmake (
 )
 
 cd cmake
-cmake ..
 
+cmake ..
 cmake --build .
+
 pause
