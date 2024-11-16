@@ -56,7 +56,7 @@ void updateGraphics()
 	SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0x00, 0x00, 0xFF);
 	SDL_RenderFillRect(gameRenderer, &fillRect);
 
-	SDL_RenderCopy(gameRenderer, testTexture, NULL, &fillRect);
+	SDL_RenderCopy(gameRenderer, testTexture->texture, NULL, &fillRect);
 
 	SDL_RenderPresent(gameRenderer);
 }

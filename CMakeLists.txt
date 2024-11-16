@@ -39,6 +39,7 @@ set(EXECUTABLE_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/build)
 
 set(APP2048_SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(APP2048_RESOURCES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/resources)
+set(APP2048_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 file(GLOB_RECURSE C_FILES ${APP2048_SRC_PATH}/*.c)
 file(GLOB_RECURSE H_FILES ${APP2048_SRC_PATH}/*.h)
@@ -55,11 +56,19 @@ endif()
 
 target_link_libraries(2048_App PRIVATE SDL2::SDL2)
 
+# Copying Libraries
 add_custom_command(TARGET 2048_App POST_BUILD
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${SDL2_image_DIR}/../bin/SDL2_image.dll" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/")
 
 add_custom_command(TARGET 2048_App POST_BUILD
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${SDL2_DIR}/../bin/SDL2.dll" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/")
 
+# Copying Resources
+# Degueu pour l'instant, a opti plus tard...
+add_custom_target(build-time-make-directory ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/resources/"
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${APP2048_CMAKE_PATH}/resources/")
+
 add_custom_command(TARGET 2048_App POST_BUILD
-    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${RESOURCES_FILES}" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/")
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${RESOURCES_FILES}" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/resources/"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${RESOURCES_FILES}" "${APP2048_CMAKE_PATH}/resources/")
