@@ -27,7 +27,7 @@ bool initGraphics()
 
 void updateGraphics()
 {
-	
+	SDL_UpdateWindowSurface(gameWindow);
 }
 
 void closeGraphics()
