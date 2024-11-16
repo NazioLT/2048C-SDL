@@ -2,11 +2,15 @@
 
 #include "graphics.h"
 #include "inputs.h"
+#include "medias.h"
 #include <stdio.h>
 
 bool initEngine()
 {
-	return initGraphics();
+	if (!initGraphics())
+		return false;
+
+	return true;
 }
 
 void closeEngine()

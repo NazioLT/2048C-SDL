@@ -38,9 +38,11 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/build)
 
 set(APP2048_SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(APP2048_RESOURCES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/resources)
 
 file(GLOB_RECURSE C_FILES ${APP2048_SRC_PATH}/*.c)
 file(GLOB_RECURSE H_FILES ${APP2048_SRC_PATH}/*.h)
+file(GLOB_RECURSE RESOURCES_FILES ${APP2048_RESOURCES_PATH}/*)
 
 add_executable(2048_App "src/main.c" ${C_FILES} ${H_FILES})
 
@@ -54,8 +56,10 @@ endif()
 target_link_libraries(2048_App PRIVATE SDL2::SDL2)
 
 add_custom_command(TARGET 2048_App POST_BUILD
-    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${SDL2_image_DIR}/../bin/SDL2_image.dll" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/"
-)
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${SDL2_image_DIR}/../bin/SDL2_image.dll" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/")
+
 add_custom_command(TARGET 2048_App POST_BUILD
-    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${SDL2_DIR}/../bin/SDL2.dll" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/"
-)
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${SDL2_DIR}/../bin/SDL2.dll" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/")
+
+add_custom_command(TARGET 2048_App POST_BUILD
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${RESOURCES_FILES}" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/")

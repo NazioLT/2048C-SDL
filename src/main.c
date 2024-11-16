@@ -4,7 +4,7 @@
 int main(int argc, char* args[])
 {
 	if (!initEngine())
-		return 0;
+		goto close;
 
 	while (1)
 	{
@@ -21,6 +21,7 @@ int main(int argc, char* args[])
 		updateGraphics();
 	}
 
+	close:
 	closeEngine();
 
 	return 0;
