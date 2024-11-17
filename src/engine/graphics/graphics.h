@@ -1,7 +1,6 @@
 #ifndef C2048APP_GRAPHICS_H
 #define C2048APP_GRAPHICS_H
 
-#include "sprite.h"
 #include <stdbool.h>
 
 #define APP_NAME "2048 SDL"

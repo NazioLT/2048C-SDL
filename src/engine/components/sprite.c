@@ -1,7 +1,7 @@
 #include "sprite.h"
 
-#include "medias.h"
-#include "graphics.h"
+#include "engine/medias.h"
+#include "engine/graphics/graphics.h"
 #include <stdio.h>
 
 const int MAX_SPRITE_COUNT = 16;

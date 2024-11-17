@@ -1,4 +1,5 @@
 #include "engine/engine.h"
+#include "game/game.h"
 #include <stdio.h>
 
 int main(int argc, char* args[])
@@ -6,23 +7,23 @@ int main(int argc, char* args[])
 	if (!initEngine())
 		goto close;
 
-	Sprite* sprite = createSprite(0, 0);
-	Sprite* sprite2 = createSprite(2.5, 2);
+	if (!initGame())
+		goto close;
 
 	while (1)
 	{
-		struct GameEvents gameEvents = updateEvents();
+		EngineEvents* events = updateEvents();
 
-		if (gameEvents.quit)
+		if (events->quit)
 			break;
 
-		//Game logic
-
+		updateGame();
 		updateGraphics();
 	}
 
 	close:
 	closeEngine();
+	closeGame();
 
 	return 0;
 }

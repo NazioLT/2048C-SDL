@@ -1,7 +1,7 @@
 #include "graphics.h"
 
-#include "medias.h"
-#include "sprite.h"
+#include "engine/medias.h"
+#include "engine/components/sprite.h"
 #include "camera.h"
 
 #include <SDL_image.h>

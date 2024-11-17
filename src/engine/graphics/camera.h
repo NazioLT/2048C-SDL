@@ -2,7 +2,7 @@
 #define C2048APP_CAMERA_H
 
 #include <SDL.h>
-#include "medias.h"
+#include "engine/medias.h"
 
 bool initCamera(float scale, float x, float y);
 void moveCamera(float x, float y);

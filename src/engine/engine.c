@@ -1,19 +1,22 @@
 #include "engine.h"
 
-#include "graphics.h"
+#include "graphics/graphics.h"
 #include "inputs.h"
 #include "medias.h"
-#include "camera.h"
-#include "sprite.h"
+#include "graphics/camera.h"
+#include "components/sprite.h"
 
 #include <stdio.h>
+#include <stdbool.h>
+
+EngineEvents engineEvents;
 
 bool initEngine()
 {
 	if (!initGraphics())
 		return false;
 
-	if (!initCamera(6, 0, 0))
+	if (!initCamera(2, 0, 0))
 		return false;
 
 	return true;
@@ -26,26 +29,27 @@ void closeEngine()
 	closeGraphics();
 }
 
-struct GameEvents updateEvents()
+const EngineEvents* updateEvents()
 {
-	struct GameEvents gameEvents = {
-		.quit = false
-	};
-
 	SDL_Event events;
 
 	while (SDL_PollEvent(&events) != 0)
 	{
 		if (events.type == SDL_QUIT)
 		{
-			gameEvents.quit = true;
+			engineEvents.quit = true;
 		}
 		if (events.type == SDL_KEYDOWN)
 		{
-			gameEvents.hasKeyDown = true;
-			updateInputsArray(&events, &gameEvents.keyDown);
+			engineEvents.hasKeyDown = true;
+			updateInputsArray(&events, engineEvents.keyDown);
 		}
 	}
 
-	return gameEvents;
+	return &engineEvents;
+}
+
+const EngineEvents* getEvents()
+{
+	return &engineEvents;
 }
