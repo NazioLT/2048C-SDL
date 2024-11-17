@@ -1,8 +1,8 @@
 #ifndef C2048APP_ENGINE_H
 #define C2048APP_ENGINE_H
 
-#include "graphics.h"
 #include "inputs.h"
+#include "sprite.h"
 
 struct GameEvents 
 {

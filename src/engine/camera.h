@@ -5,6 +5,7 @@
 #include "medias.h"
 
 bool initCamera(float scale, float x, float y);
-SDL_Rect cameraTransformWorldToScreenSpace(const Texture* texture, SDL_Rect worldSpaceRect);
+void moveCamera(float x, float y);
+SDL_Rect cameraTransformWorldToScreenSpace(const SDL_FRect* worldSpaceRect);
 
 #endif

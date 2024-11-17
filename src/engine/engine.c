@@ -4,6 +4,7 @@
 #include "inputs.h"
 #include "medias.h"
 #include "camera.h"
+#include "sprite.h"
 
 #include <stdio.h>
 
@@ -12,7 +13,7 @@ bool initEngine()
 	if (!initGraphics())
 		return false;
 
-	if (!initCamera(2, 0, 0))
+	if (!initCamera(6, 0, 0))
 		return false;
 
 	return true;
@@ -20,6 +21,8 @@ bool initEngine()
 
 void closeEngine()
 {
+	freeAllSprites();
+
 	closeGraphics();
 }
 

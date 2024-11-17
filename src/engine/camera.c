@@ -13,24 +13,29 @@ float PixelPerUnit = WINDOW_HEIGHT;
 bool initCamera(float scale, float x, float y)
 {
 	Scale = scale;
-	X = x;
-	Y = y;
+	moveCamera(x, y);
 
 	PixelPerUnit = WINDOW_HEIGHT / Scale;
+
+	return true;
 }
 
-SDL_Rect cameraTransformWorldToScreenSpace(const Texture* texture, SDL_Rect worldSpaceRect)
+void moveCamera(float x, float y)
 {
-	float pixelPerUnit = WINDOW_HEIGHT / Scale;
+	X = x;
+	Y = y;
+}
 
-	SDL_Rect screenSpaceRect = 
+SDL_Rect cameraTransformWorldToScreenSpace(const SDL_FRect* worldSpaceRect)
+{
+	SDL_Rect screenSpaceRect =
 	{
-		.w = worldSpaceRect.h * pixelPerUnit,
-		.h = worldSpaceRect.h * pixelPerUnit
+		.w = worldSpaceRect->w * PixelPerUnit,
+		.h = worldSpaceRect->h * PixelPerUnit
 	};
 
-	screenSpaceRect.x = pixelPerUnit * -X + pixelPerUnit * worldSpaceRect.x + CameraCenterX - screenSpaceRect.w / 2;
-	screenSpaceRect.y = pixelPerUnit * -Y + pixelPerUnit * worldSpaceRect.y + CameraCenterY - screenSpaceRect.h / 2;
+	screenSpaceRect.x = PixelPerUnit * -X + PixelPerUnit * worldSpaceRect->x + CameraCenterX - screenSpaceRect.w / 2;
+	screenSpaceRect.y = PixelPerUnit * -Y + PixelPerUnit * worldSpaceRect->y + CameraCenterY - screenSpaceRect.h / 2;
 
 	return screenSpaceRect;
 }

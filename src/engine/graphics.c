@@ -1,7 +1,10 @@
 #include "graphics.h"
 
 #include "medias.h"
+#include "sprite.h"
 #include "camera.h"
+
+#include <SDL_image.h>
 #include <stdio.h>
 
 SDL_Window* gameWindow = NULL;
@@ -49,10 +52,15 @@ void updateGraphics()
 {
 	SDL_RenderClear(gameRenderer);
 
-	SDL_Rect worldSpaceRect = { 0, 0, 1, 1 };
-	SDL_Rect screenSpaceRect = cameraTransformWorldToScreenSpace(&testTexture, worldSpaceRect);
+	for (size_t i = 0; i < getSpriteCount(); i++)
+	{
+		Sprite* drawCall = getSprite(i);
 
-	SDL_RenderCopy(gameRenderer, testTexture->texture, NULL, &screenSpaceRect);
+		SDL_FRect worldSpaceRect = { drawCall->x, drawCall->y, 1, 1 };
+		SDL_Rect screenSpaceRect = cameraTransformWorldToScreenSpace(&worldSpaceRect);
+
+		SDL_RenderCopy(gameRenderer, drawCall->texture->texture, NULL, &screenSpaceRect);
+	}
 
 	SDL_RenderPresent(gameRenderer);
 }
@@ -67,7 +75,7 @@ void closeGraphics()
 	SDL_DestroyWindow(gameWindow);
 	gameRenderer = NULL;
 	gameWindow = NULL;
-	
+
 	IMG_Quit();
 	SDL_Quit();
 }

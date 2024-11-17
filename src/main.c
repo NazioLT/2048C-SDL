@@ -6,6 +6,9 @@ int main(int argc, char* args[])
 	if (!initEngine())
 		goto close;
 
+	Sprite* sprite = createSprite(0, 0);
+	Sprite* sprite2 = createSprite(2.5, 2);
+
 	while (1)
 	{
 		struct GameEvents gameEvents = updateEvents();
@@ -13,10 +16,7 @@ int main(int argc, char* args[])
 		if (gameEvents.quit)
 			break;
 
-		if (gameEvents.hasKeyDown)
-		{
-			printf("%d\n", gameEvents.keyDown[APP_INPUT_UP]);
-		}
+		//Game logic
 
 		updateGraphics();
 	}
