@@ -5,29 +5,6 @@
 
 SDL_Renderer* renderer = NULL;
 
-Texture* loadSDLTextureFromPath(char* path)
-{
-	SDL_Surface* loadedSurface = IMG_Load(path);
-	if (loadedSurface == NULL)
-	{
-		printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
-		return NULL;
-	}
-
-	SDL_Texture* newTexture = NULL;
-	SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
-	newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-	if (newTexture == NULL)
-	{
-		printf("Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
-	}
-
-	//Get rid of old loaded surface
-	SDL_FreeSurface(loadedSurface);
-
-	return newTexture;
-}
-
 void freeTexture(Texture* texture)
 {
 	if (texture == NULL)

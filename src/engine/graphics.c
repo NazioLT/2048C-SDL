@@ -1,11 +1,8 @@
 #include "graphics.h"
 
 #include "medias.h"
+#include "camera.h"
 #include <stdio.h>
-
-#define APP_NAME "2048 SDL"
-#define WINDOW_WIDTH 840
-#define WINDOW_HEIGHT 480
 
 SDL_Window* gameWindow = NULL;
 SDL_Renderer* gameRenderer = NULL;
@@ -52,11 +49,10 @@ void updateGraphics()
 {
 	SDL_RenderClear(gameRenderer);
 
-	SDL_Rect fillRect = { WINDOW_WIDTH / 4, WINDOW_HEIGHT / 4, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
-	SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0x00, 0x00, 0xFF);
-	SDL_RenderFillRect(gameRenderer, &fillRect);
+	SDL_Rect worldSpaceRect = { 0, 0, 1, 1 };
+	SDL_Rect screenSpaceRect = cameraTransformWorldToScreenSpace(&testTexture, worldSpaceRect);
 
-	SDL_RenderCopy(gameRenderer, testTexture->texture, NULL, &fillRect);
+	SDL_RenderCopy(gameRenderer, testTexture->texture, NULL, &screenSpaceRect);
 
 	SDL_RenderPresent(gameRenderer);
 }

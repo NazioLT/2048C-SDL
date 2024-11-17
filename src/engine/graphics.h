@@ -4,6 +4,10 @@
 #include <SDL_image.h>
 #include <stdbool.h>
 
+#define APP_NAME "2048 SDL"
+#define WINDOW_WIDTH 840
+#define WINDOW_HEIGHT 480
+
 bool initGraphics();
 void updateGraphics();
 void closeGraphics();

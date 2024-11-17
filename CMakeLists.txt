@@ -65,9 +65,8 @@ add_custom_command(TARGET 2048_App POST_BUILD
 
 # Copying Resources
 # Degueu pour l'instant, a opti plus tard...
-add_custom_target(build-time-make-directory ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/resources/"
-    COMMAND ${CMAKE_COMMAND} -E make_directory "${APP2048_CMAKE_PATH}/resources/")
+add_custom_command(TARGET 2048_App PRE_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/resources/")
+add_custom_command(TARGET 2048_App PRE_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "${APP2048_CMAKE_PATH}/resources/")
 
 add_custom_command(TARGET 2048_App POST_BUILD
     COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${RESOURCES_FILES}" "${EXECUTABLE_OUTPUT_PATH}/$<CONFIG>/resources/"
