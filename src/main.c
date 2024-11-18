@@ -1,4 +1,5 @@
 #include "engine/engine.h"
+#include "engine/engineEvents.h"
 #include "game/game.h"
 #include <stdio.h>
 
@@ -12,7 +13,8 @@ int main(int argc, char* args[])
 
 	while (1)
 	{
-		EngineEvents* events = updateEvents();
+		EngineEvents* events = getEvents();
+		updateEngine();
 
 		if (events->quit)
 			break;

@@ -1,15 +1,18 @@
 #include "engine.h"
 
 #include "graphics/graphics.h"
-#include "inputs.h"
-#include "medias.h"
 #include "graphics/camera.h"
-#include "components/sprite.h"
+#include "engineEvents.h"
 
-#include <stdio.h>
 #include <stdbool.h>
 
-EngineEvents engineEvents;
+int OldFrameTick = 0;
+float DeltaTime = 0;
+
+float getDeltaTime()
+{
+	return DeltaTime;
+}
 
 bool initEngine()
 {
@@ -22,34 +25,20 @@ bool initEngine()
 	return true;
 }
 
+void updateEngine()
+{
+	updateEvents();
+
+	int currentTick = SDL_GetTicks();
+	int deltaTick = currentTick - OldFrameTick;
+
+	OldFrameTick = currentTick;
+	DeltaTime = deltaTick / 1000.0f;
+}
+
 void closeEngine()
 {
 	freeAllSprites();
 
 	closeGraphics();
-}
-
-const EngineEvents* updateEvents()
-{
-	SDL_Event events;
-
-	while (SDL_PollEvent(&events) != 0)
-	{
-		if (events.type == SDL_QUIT)
-		{
-			engineEvents.quit = true;
-		}
-		if (events.type == SDL_KEYDOWN)
-		{
-			engineEvents.hasKeyDown = true;
-			updateInputsArray(&events, engineEvents.keyDown);
-		}
-	}
-
-	return &engineEvents;
-}
-
-const EngineEvents* getEvents()
-{
-	return &engineEvents;
 }

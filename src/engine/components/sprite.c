@@ -30,6 +30,7 @@ Sprite* createSprite(float x, float y)
 	sprite->texture = testTexture;
 	sprite->x = x;
 	sprite->y = y;
+	sprite->zOrder = 0;
 
 	sprites[spriteCount] = sprite;
 	spriteCount++;

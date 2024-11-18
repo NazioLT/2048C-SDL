@@ -1,21 +1,12 @@
 #ifndef C2048APP_ENGINE_H
 #define C2048APP_ENGINE_H
 
-#include "inputs.h"
-#include "components/sprite.h"
+#include <stdbool.h>
 
-typedef struct EngineEvents 
-{
-    bool quit;
-
-    bool hasKeyDown;
-    bool keyDown[APP_INPUT_COUNT];
-} EngineEvents;
+float getDeltaTime();
 
 bool initEngine();
+void updateEngine();
 void closeEngine();
-
-const EngineEvents* updateEvents();
-const EngineEvents* getEvents();
 
 #endif

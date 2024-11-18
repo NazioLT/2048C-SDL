@@ -10,7 +10,7 @@ void freeTexture(Texture* texture)
 	if (texture == NULL)
 		return;
 
-	SDL_DestroyTexture(texture->texture);
+	SDL_DestroyTexture(texture->textureSDL);
 
 	free(texture);
 	texture = NULL;
@@ -40,7 +40,7 @@ bool createTexture(Texture* destination, const char* path)
 	}
 
 	Texture* finalTexture = malloc(sizeof(Texture));
-	finalTexture->texture = newTexture;
+	finalTexture->textureSDL = newTexture;
 	finalTexture->width = loadedSurface->w;
 	finalTexture->height = loadedSurface->h;
 

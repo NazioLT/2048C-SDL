@@ -9,6 +9,7 @@ typedef struct Sprite
 
 	float x;
 	float y;
+	int zOrder;
 } Sprite;
 
 int getSpriteCount();

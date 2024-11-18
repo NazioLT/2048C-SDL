@@ -6,7 +6,7 @@
 
 typedef struct Texture
 {
-	SDL_Texture* texture;
+	SDL_Texture* textureSDL;
 
 	int width;
 	int height;

@@ -3,6 +3,7 @@
 #include "engine/medias.h"
 #include "engine/components/sprite.h"
 #include "camera.h"
+#include "drawCalls.h"
 
 #include <SDL_image.h>
 #include <stdio.h>
@@ -45,6 +46,12 @@ bool initGraphics()
 		return false;
 	}
 
+	if (!initDrawCalls())
+	{
+		printf("DrawCalls couldn't initialize!");
+		return false;
+	}
+
 	return true;
 }
 
@@ -52,21 +59,15 @@ void updateGraphics()
 {
 	SDL_RenderClear(gameRenderer);
 
-	for (size_t i = 0; i < getSpriteCount(); i++)
-	{
-		Sprite* drawCall = getSprite(i);
-
-		SDL_FRect worldSpaceRect = { drawCall->x, drawCall->y, 1, 1 };
-		SDL_Rect screenSpaceRect = cameraTransformWorldToScreenSpace(&worldSpaceRect);
-
-		SDL_RenderCopy(gameRenderer, drawCall->texture->texture, NULL, &screenSpaceRect);
-	}
+	DrawSprites(gameRenderer);
 
 	SDL_RenderPresent(gameRenderer);
 }
 
 void closeGraphics()
 {
+	closeDrawCalls();
+
 	//FREE IMG
 	freeAllMedias();
 
